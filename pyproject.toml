@@ -1,0 +1,16 @@
+[project]
+name = "olm-resolution-picker"
+description = "A smart, customizable resolution selector node with live aspect ratio preview, image overlays, and checkerboard support — cleanly parsed from a human-readable text file."
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = ["torch>=2.1.0", "numpy>=1.26.4", "scipy>=1.11.4"]
+
+[project.urls]
+Repository = "https://github.com/o-l-l-i/ComfyUI-Olm-Resolution-Picker"
+#  Used by Comfy Registry https://registry.comfy.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-Olm-Resolution-Picker"
+Icon = ""
+includes = []
