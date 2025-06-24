@@ -85,6 +85,8 @@ app.registerExtension({
                     originalOnDrawForeground.call(this, ctx);
                 }
 
+                if(this.collapsed) return;
+
                 this.drawResolutionPreview(ctx);
             };
 
