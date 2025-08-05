@@ -1,13 +1,15 @@
 import os
 
+
+DEBUG_MODE = False
+
+
+def debug_print(*args, **kwargs):
+    if DEBUG_MODE:
+        print(*args, **kwargs)
+
+
 class OlmResolutionPicker:
-    """
-    Resolution Picker Node with:
-    - Headers via -- in text file
-    - Label support via ':' separator for descriptions
-    - Comments with //
-    - Validated and grouped dropdown menu
-    """
 
     RESOLUTION_FILE = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "resolutions.txt")
@@ -18,20 +20,40 @@ class OlmResolutionPicker:
         options = cls.load_resolutions()
         return {
             "required": {
-                "resolution": (options, {
-                    "default": options[0] if options else "1024x1024"
-                }),
+                "resolution": (
+                    options,
+                    {"default": options[0] if options else "1024x1024"},
+                ),
+                "draw_preview": ("BOOLEAN", {"default": True}),
                 "show_checker": ("BOOLEAN", {"default": False}),
                 "show_image": ("BOOLEAN", {"default": False}),
+                "swap_dimensions": ("BOOLEAN", {"default": False}),
+                "custom_width": (
+                    "INT",
+                    {"default": 512, "min": 64, "max": 8192, "step": 1},
+                ),
+                "custom_height": (
+                    "INT",
+                    {"default": 512, "min": 64, "max": 8192, "step": 1},
+                ),
+                "divisible_by": (
+                    ["1", "2", "4", "8", "16", "32", "64"],
+                    {"default": "64"},
+                ),
             }
         }
 
     @staticmethod
     def load_resolutions():
-        print("RESOLUTION_FILE: ", OlmResolutionPicker.RESOLUTION_FILE)
+        debug_print(
+            "[OlmResolutionPicker] Resolution file: ",
+            OlmResolutionPicker.RESOLUTION_FILE,
+        )
 
         if not os.path.exists(OlmResolutionPicker.RESOLUTION_FILE):
-            print("Resolution file missing. Using fallback defaults.")
+            debug_print(
+                "[OlmResolutionPicker] Resolution file missing. Using fallback defaults."
+            )
             return ["512x512", "1024x1024"]
 
         with open(OlmResolutionPicker.RESOLUTION_FILE, "r") as f:
@@ -71,7 +93,13 @@ class OlmResolutionPicker:
                 except ValueError:
                     continue
 
-        return cleaned if cleaned else ["512x512"]
+        if not cleaned:
+            cleaned = ["512x512"]
+
+        if "Custom" not in cleaned:
+            cleaned.append("Custom")
+
+        return cleaned
 
     RETURN_TYPES = ("INT", "INT")
     RETURN_NAMES = ("width", "height")
@@ -79,18 +107,53 @@ class OlmResolutionPicker:
     FUNCTION = "pick"
     CATEGORY = "Utilities"
 
-    def pick(self, resolution, show_checker=False, show_image=False):
-        if resolution.startswith("--"):
-            print(f"[OlmResolutionPicker] Ignored non-selectable header: '{resolution}'. Falling back to 1024x1024.")
-            return (1024, 1024)
+    def pick(
+        self,
+        resolution,
+        draw_preview,
+        show_checker,
+        show_image,
+        swap_dimensions,
+        custom_width=512,
+        custom_height=512,
+        divisible_by="64",
+    ):
 
-        base_res = resolution.split(":")[0].strip()
-        try:
-            width, height = map(int, base_res.lower().split("x"))
-            return (width, height)
-        except Exception as e:
-            print(f"[Error] Failed to parse resolution '{resolution}': {e}")
-            return (1024, 1024)
+        def round_to_multiple(value, multiple):
+            return max(multiple, round(value / multiple) * multiple)
+
+        if resolution.strip().lower() == "custom":
+            try:
+                snap = int(divisible_by)
+            except:
+                snap = 64
+
+            width = round_to_multiple(custom_width, snap)
+            height = round_to_multiple(custom_height, snap)
+
+            width = max(64, min(width, 8192))
+            height = max(64, min(height, 8192))
+        else:
+            if resolution.startswith("--"):
+                debug_print(
+                    f"[OlmResolutionPicker] Ignored header: '{resolution}', fallback to 1024x1024."
+                )
+                return (1024, 1024)
+
+            base_res = resolution.split(":")[0].strip()
+            try:
+                width, height = map(int, base_res.lower().split("x"))
+            except Exception as e:
+                debug_print(
+                    f"[OlmResolutionPicker] Failed to parse resolution '{resolution}': {e}"
+                )
+                return (1024, 1024)
+
+        if swap_dimensions:
+            width, height = height, width
+
+        return (width, height)
+
 
 WEB_DIRECTORY = "./js"
 
@@ -98,6 +161,7 @@ WEB_DIRECTORY = "./js"
 NODE_CLASS_MAPPINGS = {
     "OlmResolutionPicker": OlmResolutionPicker,
 }
+
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "OlmResolutionPicker": "Olm Resolution Picker",

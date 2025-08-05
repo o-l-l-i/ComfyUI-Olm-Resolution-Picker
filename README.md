@@ -1,6 +1,12 @@
 # Olm Resolution Picker for ComfyUI
 
-![Olm Resolution Picker node image](/assets/olm_resolution_picker.png)
+![Olm Resolution Picker node image](./assets/olm_resolution_picker.png)
+
+- **Author:** Olli Sorjonen
+- **GitHub:** [https://github.com/o-l-l-i](https://github.com/o-l-l-i)
+- **X:** [https://x.com/Olmirad](https://x.com/Olmirad)
+- **Version:** 1.0.1 (Restructuring code, new features)
+- **NOTE:** New added fields will break the node in graphs, so use caution!
 
 The **Olm Resolution Picker** is a lightweight, customizable resolution selector node for ComfyUI.
 It allows you to define your preferred image resolutions using a simple `resolutions.txt` file — making it future-proof, editable, and great for organized workflows.
@@ -11,25 +17,31 @@ This node is built for users who want more than just a few hardcoded presets, or
 
 ## ✨ Features
 
-- 📄 **User-editable `resolutions.txt`** for full control
-- 🔢 Outputs resolution as `width` and `height` integers
-- 🧠 Supports **labels** (e.g., `768x1344: vertical (9:16)`)
-- ➕ Allows **group headers** using `-- Header:` syntax
-- 🧩 Aspect Ratio Visualization:
-Optionally toggle a preview image to better understand image composition and framing at a given resolution
-- ♟️ Checkerboard Overlay:
-Helps visually estimate scale — tile size remains constant regardless of resolution, giving a quick sense of dimensions
-
-- 🖼️ Replaceable Preview Image:
-Swap test_image.png in the node’s JS directory to use your own visual reference
-- ✅ Skips invalid lines or malformed input automatically
-- 🛡️ Built-in fallback resolution to prevent broken graph evaluation
+- Outputs resolution as `width` and `height` integers
+  - **User-editable `resolutions.txt`** for full control
+  - Supports **labels** (e.g., `768x1344: vertical (9:16)`)
+  - Allows **group headers** using `-- Header:` syntax
+  - Skips invalid lines or malformed input automatically
+  - Built-in fallback resolution to prevent broken graph evaluation
+- Responsive, scaling UI
+- Aspect Ratio Visualization:
+  - Optionally toggle a preview image to better understand image composition and framing at a given resolution
+- Checkerboard Overlay:
+  - Helps visually estimate scale — tile size remains constant regardless of resolution, giving a quick sense of dimensions
+- Replaceable Preview Image:
+  - Swap test_image.png in the node’s "js" directory to use your own visual reference
+- Preview image can be disabled completely if needed
+- Swap dimension feature
+  - swap width with height for easy portrait to landscape
+- Custon resolution mode allows numeric input of resolution
+- Custom resolution snap feature
+  - Snap to divisible by 1,2,4,8,16,32,64
 
 ---
 
 ## Installation
 
-1. Clone this repository to your ComfyUI/custom_nodes folder.
+Clone this repository to your ComfyUI/custom_nodes folder.
 
 2. Check/install dependencies.
 
@@ -46,9 +58,9 @@ Your folder structure should look like:
 ComfyUI/
 └── custom_nodes/
 └──── ComfyUI-Olm-Resolution-Picker/
-├──── init.py
-├──── olm_resolution_picker.py
-└──── resolutions.txt
+├────── init.py
+├────── olm_resolution_picker.py
+└────── resolutions.txt
 ```
 
 Restart ComfyUI after installation.
@@ -118,6 +130,38 @@ If you'd like to use your own image:
 This is a personal learning project (v1), created to explore custom node development in ComfyUI. While I took care to ensure it functions properly and it has functioned fine in my own use, there may still be bugs, rough edges, or unexpected behavior - so use with caution.
 
 Feedback is welcome! Feel free to open an issue if you encounter a problem or have suggestions or ideas to improve the node.
+
+---
+
+## Updates 1.0.1
+
+- Refactored to more modular code structure for new features (coming later) and maintainability
+- Added feature for disabling preview rendering
+- Added swap dimensions features (as requested)
+- Added custom resolution feature
+  - You can basically use this to set resolution
+- Added custom resolution snapping feature
+  - Snap to divisible by 1,2,4,8,16,32,64
+- Improved scaling responsive preview image rendering
+- Improved node space usage
+- Improved node widget handling
+
+---
+
+## License & Usage Terms
+
+Copyright (c) 2025 Olli Sorjonen
+
+This project is source-available, but not open-source under a standard open-source license, and not freeware.
+You may use and experiment with it freely, and any results you create with it are yours to use however you like.
+
+However:
+
+Redistribution, resale, rebranding, or claiming authorship of this code or extension is strictly prohibited without explicit written permission.
+
+Use at your own risk. No warranties or guarantees are provided.
+
+The only official repository for this project is: 👉 https://github.com/o-l-l-i/ComfyUI-Olm-Resolution-Picker
 
 ---
 
