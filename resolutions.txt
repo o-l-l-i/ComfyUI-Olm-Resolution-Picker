@@ -1,0 +1,64 @@
+// Please don't take these as truths, they are resolutions I have picked from model repos, forum discussions, and so on.
+1024x1024
+-- SDXL
+1024x1024: square (1:1)
+1536x640: landscape (12:5)
+640x1536: portrait (5:12)
+1564x670: cinematic (21:9)
+1365x768: widescreen (16:9)
+1344x768: landscape (7:4)
+768x1344: portrait (9:16)
+1254x836: landscape (3:2)
+836x1254: portrait (3:2)
+1216x832: landscape (19:13)
+832x1216: portrait (13:19)
+1182x886: photo (4:3)
+1152x896: landscape (9:7)
+896x1152: portrait (7:9)
+915x1144: portrait (4:5)
+
+-- Flux1.D 2.0 MP (maximum)
+1408x1408 square (1:1)
+1728x1152: landscape (3:2)
+1664x1216: landscape (4:3)
+1920x1088: widescreen (16:9)
+2176x960: cinematic (21:9)
+
+-- Flux1.D 1.0 MP (SDXL recommended)
+1024x1024: square (1:1)
+1216x832: landscape (3:2)
+1152x896: landscape (4:3)
+1344x768: widescreen (16:9)
+1536x640: cinematic (21:9)
+
+-- Flux1.D 0.1 MP (minimum)
+320x320: square (1:1)
+384x256: landscape (3:2)
+448x320: landscape (4:3)
+448x256: widescreen (16:9)
+576x256: cinematic (21:9)
+
+-- HiDream
+1024x1024: square (1:1)
+
+-- Wan 2.1
+1280x720: widescreen (16:9)
+832x480: widescreen (16:9)
+
+-- LTX Video
+1280x720: widescreen (16:9)
+1216x704: widescreen (16:9)
+864x576: landscape (3:2)
+768x512: landscape (3:2)
+
+-- Hunyuan Video
+960x960: square (1:1)
+720x720: square (1:1)
+1104x832: landscape (4:3)
+832x1104: portrait (3:4)
+1280x720: widescreen (16:9)
+720x1280: portrait (9:16)
+832x624: landscape (4:3)
+624x832: portrait (3:4)
+960x544: widescreen (16:9)
+544x960: portrait (9:16)
