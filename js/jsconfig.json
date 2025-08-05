@@ -1,9 +1,0 @@
-{
-  "include": ["./**/*.js"],
-  "compilerOptions": {
-    "target": "es6",
-    "checkJs": true,
-    "allowJs": true,
-    "noEmit": true
-  }
-}
