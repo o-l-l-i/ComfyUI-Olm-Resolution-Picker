@@ -307,8 +307,6 @@ app.registerExtension({
                     widget.computeSize = () => visible ? [width, height] : [0, -4];
                 };
 
-                // this._needsResize = true;
-
                 toggleWidgetVisibility(this.customWidthWidget, isCustom);
                 toggleWidgetVisibility(this.customHeightWidget, isCustom);
                 toggleWidgetVisibility(this.divisibleByWidget, isCustom);
