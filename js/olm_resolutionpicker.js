@@ -113,8 +113,6 @@ app.registerExtension({
                         if (this.drawPreviewWidget.value == true) {
                             const newSize = this.computeSize();
                             if (newSize[1] > this.size[1]) {
-                                this.setSize(newSize);
-                                this.setDirtyCanvas(true, true);
                                 this._needsResize = true;
                             }
                         }
