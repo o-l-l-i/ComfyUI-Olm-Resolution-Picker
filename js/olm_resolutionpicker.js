@@ -46,8 +46,8 @@ app.registerExtension({
             const originalOnNodeCreated = nodeType.prototype.onNodeCreated;
             const originalOnDrawForeground = nodeType.prototype.onDrawForeground;
             const originalOnConfigure = nodeType.prototype.onConfigure;
+            const originalOnAdded = nodeType.prototype.onAdded;
             const originalOnWidgetChanged = nodeType.prototype.onWidgetChanged;
-
 
             const TEST_IMAGE_PATH = "./extensions/ComfyUI-Olm-Resolution-Picker/test_image.png";
 
@@ -109,7 +109,15 @@ app.registerExtension({
                     const originalCallback = this.drawPreviewWidget.callback;
                     this.drawPreviewWidget.callback = (value) => {
                         if (originalCallback) originalCallback.call(this.drawPreviewWidget, value);
-                        this._needsResize = true;
+
+                        if (this.drawPreviewWidget.value == true) {
+                            const newSize = this.computeSize();
+                            if (newSize[1] > this.size[1]) {
+                                this.setSize(newSize);
+                                this.setDirtyCanvas(true, true);
+                                this._needsResize = true;
+                            }
+                        }
                     };
                 }
 
@@ -125,6 +133,14 @@ app.registerExtension({
                 }
                 this.cacheWidgets();
                 this.updateCustomResolutionVisibility();
+            }
+
+
+            nodeType.prototype.onAdded = function () {
+                if (originalOnAdded) {
+                    originalOnAdded.call(this);
+                }
+                this._needsResize = true;
             }
 
 
@@ -224,7 +240,6 @@ app.registerExtension({
 
                 ctx.restore();
             };
-
 
             nodeType.prototype.getActiveResolution = function () {
                 let w = 0, h = 0;
